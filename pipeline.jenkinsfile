@@ -15,6 +15,8 @@ pipeline {
                 script {
                     // Compile and run the Rust file
                     sh '''
+                    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+                    source $HOME/.cargo/env
                     rustc main.rs -o main
                     ./main
                     '''
