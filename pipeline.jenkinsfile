@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Build in Docker') {
+     /*   stage('Build in Docker') {
             steps {
                 script {
                     docker.image('rust:latest').inside {
@@ -9,7 +9,7 @@ pipeline {
                     }
                 }
             }
-        }
+        } */
         stage('Compile and Run Rust Code') {
             steps {
                 script {
