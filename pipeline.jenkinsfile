@@ -1,0 +1,49 @@
+pipeline {
+    agent {
+        docker {
+            image 'docker:latest' // Using Docker to run DinD
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
+    stages {
+        stage('Install Rust') {
+            steps {
+                script {
+                    // Run commands to install Rust
+                    sh '''
+                    apk add --no-cache curl
+                    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+                    source $HOME/.cargo/env
+                    '''
+                }
+            }
+        }
+        stage('Build Rust Project') {
+            steps {
+                script {
+                    // Run cargo build in the project directory
+                    sh '''
+                    source $HOME/.cargo/env
+                    cargo build --release
+                    '''
+                }
+            }
+        }
+        stage('Run Rust Project') {
+            steps {
+                script {
+                    // Execute the built Rust binary
+                    sh '''
+                    source $HOME/.cargo/env
+                    ./target/release/my-rust-project
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline completed.'
+        }
+    }
+}
