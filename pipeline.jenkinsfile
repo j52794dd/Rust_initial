@@ -1,6 +1,14 @@
 pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/main']], 
+                          userRemoteConfigs: [[url: 'https://github.com/j52794dd/Rust_initial.git', 
+                                              credentialsId: 'GIT_CREDENTIALS']]])
+            }
+        }
         stage('Build in Docker') {
             steps {
                 script {
