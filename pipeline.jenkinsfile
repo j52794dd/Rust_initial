@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    options {
-        cleanWs()  // This cleans the workspace before starting the build
-    }
     stages {
         
         stage('Checkout') {
