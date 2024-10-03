@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-     /*   stage('Build in Docker') {
+        stage('Build in Docker') {
             steps {
                 script {
                     docker.image('rust:latest').inside {
@@ -9,14 +9,12 @@ pipeline {
                     }
                 }
             }
-        } */
+        }
         stage('Compile and Run Rust Code') {
             steps {
                 script {
                     // Compile and run the Rust file
                     sh '''
-                    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -- -y
-                    source $HOME/.cargo/env
                     rustc main.rs -o main
                     ./main
                     '''
