@@ -1,12 +1,10 @@
 pipeline {
     agent {
-        docker {
-            image 'rust:latest' // Using a Rust Docker image
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
+           docker { image 'rust:latest' }
     }
     stages {
         stage('Compile and Run Rust Code') {
+
             steps {
                 script {
                     // Compile and run the Rust file
