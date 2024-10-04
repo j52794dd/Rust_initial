@@ -1,25 +1,10 @@
 pipeline {
-    agent any
+    agent {
+           docker { image 'rust:latest' }
+    }
     stages {
-        
-        stage('Checkout') {
-            steps {
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: '*/main']], 
-                          userRemoteConfigs: [[url: 'https://github.com/j52794dd/Rust_initial.git', 
-                                              credentialsId: 'GIT_CREDENTIALS']]])
-            }
-        }
-        stage('Build in Docker') {
-            steps {
-                script {
-                    docker.image('rust:latest').inside {
-                        sh 'cargo build'
-                    }
-                }
-            }
-        }
         stage('Compile and Run Rust Code') {
+
             steps {
                 script {
                     // Compile and run the Rust file
