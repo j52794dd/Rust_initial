@@ -3,13 +3,6 @@ pipeline {
            docker { image 'rust:latest' }
     }
     stages {
-      /*  stage('Build in Docker') {
-            steps {
-                script {
-                    
-                }
-            }
-        }
         stage('Compile and Run Rust Code') {
 
             steps {
@@ -20,13 +13,6 @@ pipeline {
                     ./main
                     '''
                 }
-            }
-        }*/
-
-       stage('Build') {
-            steps {
-                // Run a simple build command
-                sh 'echo "Building the project..."'
             }
         }
     }
