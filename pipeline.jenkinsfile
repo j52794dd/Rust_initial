@@ -1,12 +1,14 @@
 pipeline {
-    agent any
+    agent {
+            docker.image('rust:latest').inside {
+                        sh 'cargo build'
+                    }
+    }
     stages {
       /*  stage('Build in Docker') {
             steps {
                 script {
-                    docker.image('rust:latest').inside {
-                        sh 'cargo build'
-                    }
+                    
                 }
             }
         }
