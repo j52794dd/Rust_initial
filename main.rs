@@ -1,3 +1,5 @@
+
+
 fn main() {
     let mut tup: (i32, f64, String);
     tup = (3, std::f64::consts::PI, String::from("PI"));
@@ -25,11 +27,11 @@ fn main() {
             counter += 1;
         }
     }
-    /*for (index, &item) in bytes.iter().enumerate() {
+    for (index, &item) in bytes.iter().enumerate() {
         if item == b' ' {
             counter += 1;
         }
-    }*/
+    }
     for (index, item) in message.chars().enumerate() {
         println!("{} {}", index, item);
     }
@@ -73,6 +75,42 @@ fn main() {
 
     let test = "";
     println!("{}", second_word(&test));
+
+    let string = String::from("hello world");
+    println!("{}", length(string));
+
+    let mut STR= "".to_string();
+    //let &ITEM = create_str("DEREF COERCION", &mut STR);
+    //println!("{}", ITEM);
+    //for &it in create_str_static("DEREF COERCION"){
+      //  let mut i2 = it;
+        //println!("{}", i2);
+    //} //let it2;
+   // println!("{}", *it);
+    let z = 2;
+    let &num = create_num(&z);
+    println!("{}", num);
+}
+
+fn create_num<'b>(num: &'b i32) -> &'b i32 {
+    &num
+}
+
+//fn create_str_static(s: &'static str) -> String {
+  //  s.to_string()
+//}
+
+fn create_str_static(s: &'static str) -> &'static str {
+    s
+}
+
+fn create_str<'a>(s: &str, x: &'a mut String) -> &'a String {
+    *x = String::from(s);
+    x
+}
+
+fn length(string: String) -> usize {
+    string.len()
 }
 
 fn second_word(text: &str) -> &str {
