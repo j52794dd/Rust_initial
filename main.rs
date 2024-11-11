@@ -1,17 +1,50 @@
+use std::fmt;
+use std::fmt::{write, Formatter};
+
+struct Satellite {
+    name: String,
+    velocity: f64,
+}
+
+impl fmt::Display for Satellite {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "{} with velocity {}", self.name, self.velocity)
+    }
+}
+
+impl PartialEq for Satellite {
+    fn eq(&self, other: &Satellite) -> bool {
+        self.velocity == other.velocity
+    }
+}
+
+trait Altitude {
+    fn altitude(&self) -> f64;
+}
+
+impl Altitude for Satellite {
+    fn altitude(&self) -> f64 {
+        let G = 6.667430 * (1e-11);
+        let M = 5.972 * 1e24;
+        let Rearth = 6.371 * 1e6;
+        let v = self.velocity;
+        G * M / (v * v) - Rearth
+    }
+}
+
 fn main() {
-    let mut a: f32 = 0.671985;
-    let mut b = 0b1111_0000u8;
-    let mut c: u16 = 0x23f9;
+    let hubble = Satellite {
+        name: String::from("Hubble Telescope"),
+        velocity: 4.72,
+    };
 
-    println!("a is {2:<>9.6}, b is {0:016b}, c is {1:08o}", b, c, a);
+    let galileo = Satellite {
+        name: String::from("Galileo"),
+        velocity: 7905.60897,
+    };
 
-    println!("Hello, world!");
-
-    let mut a = 13;
-    let b = 2.3;
-    let c: f32 = 120.0;
-
-    let average = ((a as f64) + (b as f64) + (c as f64)) / 3.0;
-    assert_eq!(average, 45.1);
-    println!("Test passed!");
+    println!("hubble is {}", hubble);
+    println!("hubble is equal to galileo: {}", galileo == hubble);
+    println!("hubble's altitude is {}", hubble.altitude());
+    println!("galileo's altitude is {}", galileo.altitude());
 }
