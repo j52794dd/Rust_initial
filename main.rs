@@ -1,17 +1,37 @@
+use rand::prelude::*;
+use std::io;
 fn main() {
-    let mut a: f32 = 0.671985;
-    let mut b = 0b1111_0000u8;
-    let mut c: u16 = 0x23f9;
-
-    println!("a is {2:<>9.6}, b is {0:016b}, c is {1:08o}", b, c, a);
-
-    println!("Hello, world!");
-
-    let mut a = 13;
-    let b = 2.3;
-    let c: f32 = 120.0;
-
-    let average = ((a as f64) + (b as f64) + (c as f64)) / 3.0;
-    assert_eq!(average, 45.1);
-    println!("Test passed!");
+    let mut counter = 0;
+    println!("You have 10 chances");
+    let mut rng = rand::thread_rng().gen_range(1..101);
+    loop{
+        counter += 1;
+        println!("Please enter an integer between 1 and 100... ?");
+        let mut buffer = String::new();
+        //io::stdin().read_line(&mut buffer).unwrap();
+        let result = io::stdin().read_line(&mut buffer);
+        let mut guess = match result {
+            Ok(_) => buffer.trim().parse().unwrap_or_else(|_| -1),
+            Err(_) => -2,
+        };
+        if(guess == -2){
+            println!("Sorry for inconvenience! You can type again a number!");
+            counter -= 1;
+        }else if(guess == -1) {
+            println!("Guess invalid, please type a number between 1 and 100");
+        }else if (guess > rng){
+            println!("Too high\n");
+        }else if(guess < rng){
+            println!("Too low\n");
+        }
+        else{
+            println!("You win\n");
+            break;
+        }
+        if(counter > 10){
+            println!("You lose\n");
+            break;
+        }
+    }
+    println!("End of the game\n");
 }
